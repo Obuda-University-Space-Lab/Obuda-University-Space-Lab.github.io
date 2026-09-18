@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CEE CubeSat Cross-Border Roles</title>
+  <style>
+    :root{--bg:#071724;--panel:#0c263b;--line:#2b5a76;--text:#eef9ff;--muted:#a9c7d8;--accent:#4be0d0;--hu:#45d39a;--sk:#918dff;--cz:#ff9878;--hr:#65baff;--uk:#f5c65b;--intl:#b3c4d2}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+    .widget{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at 86% 4%,rgba(42,147,178,.24),transparent 36%),linear-gradient(135deg,#0c263b,#071724)}
+    .header{height:42px;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:7px 9px;border-bottom:1px solid rgba(100,162,192,.25);background:rgba(7,23,36,.78)}.title{min-width:0}.eyebrow{display:block;color:#68e1d3;font-size:7px;line-height:1;text-transform:uppercase;font-weight:800;letter-spacing:.13em}.headline{display:block;margin-top:4px;color:var(--text);font-size:11px;line-height:1;font-weight:780;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .tabs{display:flex;gap:3px;flex-shrink:0}.tab{border:1px solid #3d6680;border-radius:999px;background:#12354f;color:#dceefa;font-size:8px;line-height:1;padding:5px 6px;cursor:pointer}.tab:hover,.tab.active{background:#1d556f;border-color:var(--accent);color:#fff}
+    .stage{position:relative;height:calc(100% - 42px);min-height:0}.sankey{position:absolute;inset:0;padding:13px 7px 28px}.link{fill:none;stroke-linecap:round;opacity:.63;transition:opacity .15s ease,stroke-width .15s ease}.link:hover{opacity:1;stroke-width:12!important;cursor:pointer}.node{rx:3;ry:3;cursor:pointer;stroke:rgba(237,250,255,.75);stroke-width:.6}.node-label{fill:#effaff;font-size:8px;font-weight:750;paint-order:stroke;stroke:#0a2032;stroke-width:2.7px;stroke-linejoin:round;pointer-events:none}.role-label{fill:#a9c7d8;font-size:7px;pointer-events:none}.mission-label{fill:#f8fdfd;font-size:10px;font-weight:850;text-anchor:middle;pointer-events:none}.value-label{fill:#dceef7;font-size:7px;text-anchor:start;pointer-events:none}
+    .note{position:absolute;z-index:3;left:8px;right:8px;bottom:6px;margin:0;color:#aac7d8;font-size:7px;line-height:1.2;text-align:center}.tooltip{position:absolute;z-index:6;display:none;left:50%;top:45%;width:min(255px,calc(100% - 18px));transform:translate(-50%,-50%);padding:9px 10px;border:1px solid rgba(111,218,230,.7);border-radius:9px;background:rgba(7,25,40,.97);box-shadow:0 14px 30px rgba(0,0,0,.5);font-size:9px;line-height:1.35}.tooltip.show{display:block}.tooltip strong{display:block;color:#79eadc;margin-bottom:3px;font-size:10px}.tooltip button{position:absolute;right:6px;top:5px;border:0;background:transparent;color:#e5f7ff;font-size:15px;cursor:pointer}.tooltip p{margin:0;color:#d7e9f3}
+    @media(max-width:360px){.headline{font-size:10px}.tab{padding:5px;font-size:7px}.node-label{font-size:7px}.role-label,.value-label{font-size:6px}.mission-label{font-size:9px}.sankey{padding-left:4px;padding-right:4px}}
+  </style>
+</head>
+<body>
+<div class="widget">
+  <div class="header"><div class="title"><span class="eyebrow">Cross-border role pathways</span><span class="headline">How missions connect CEE capabilities</span></div><div class="tabs"><button class="tab active" data-case="Mauve">Mauve</button><button class="tab" data-case="CroCube">CroCube</button><button class="tab" data-case="GRBAlpha">GRB</button></div></div>
+  <div class="stage">
+    <svg class="sankey" id="diagram" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" aria-label="Cross-border CubeSat role diagram"></svg>
+    <p class="note">Links show documented roles — not money flows, national shares or ROI.</p>
+    <div class="tooltip" id="tooltip"><button id="close" aria-label="Close">×</button><strong id="tip-title"></strong><p id="tip-body"></p></div>
+  </div>
+</div>
+<script>
+const cases={
+ Mauve:{mission:'MAUVE',missionColor:'#f5c65b',nodes:[
+  {id:'uk',x:14,y:48,w:55,h:32,label:'United\nKingdom',color:'#f5c65b',side:'left'},
+  {id:'hu',x:14,y:150,w:55,h:32,label:'Hungary',color:'#45d39a',side:'left'},
+  {id:'m',x:165,y:102,w:70,h:48,label:'MAUVE',color:'#f5c65b',side:'mid'},
+  {id:'service',x:330,y:56,w:54,h:30,label:'Science data\nservice',color:'#4be0d0',side:'right'},
+  {id:'heritage',x:330,y:164,w:54,h:30,label:'16U platform\nheritage',color:'#45d39a',side:'right'}],
+ links:[
+  {a:'uk',b:'m',color:'#f5c65b',role:'Ownership, payload and data-service leadership',tip:'United Kingdom → Mauve: Blue Skies Space owns the mission and leads the payload and scientific data-service model.'},
+  {a:'hu',b:'m',color:'#45d39a',role:'C3S 16U platform and integration',tip:'Hungary → Mauve: C3S provides the 16U spacecraft platform and integration capability.'},
+  {a:'m',b:'service',color:'#4be0d0',role:'First datasets and membership architecture',tip:'Mauve → Science data service: first programme datasets and a membership/data-platform architecture are observable.'},
+  {a:'m',b:'heritage',color:'#45d39a',role:'Reusable platform capability',tip:'Mauve → 16U platform heritage: the mission demonstrates modular platform and integration capability; later commercial value requires follow-up evidence.'}
+ ]},
+ CroCube:{mission:'CROCUBE',missionColor:'#65baff',nodes:[
+  {id:'hr',x:14,y:30,w:55,h:32,label:'Croatia',color:'#65baff',side:'left'},
+  {id:'sk',x:14,y:116,w:55,h:32,label:'Slovakia',color:'#918dff',side:'left'},
+  {id:'hu',x:14,y:202,w:55,h:32,label:'Hungary',color:'#45d39a',side:'left'},
+  {id:'m',x:165,y:102,w:70,h:48,label:'CROCUBE',color:'#65baff',side:'mid'},
+  {id:'visibility',x:330,y:40,w:54,h:30,label:'Visibility &\noutreach',color:'#65baff',side:'right'},
+  {id:'integration',x:330,y:116,w:54,h:30,label:'Regional\nintegration',color:'#918dff',side:'right'},
+  {id:'ops',x:330,y:192,w:54,h:30,label:'Operations\nexperience',color:'#45d39a',side:'right'}],
+ links:[
+  {a:'hr',b:'m',color:'#65baff',role:'National identity, education and outreach',tip:'Croatia → CroCube: Croatia’s first satellite creates visibility, education and national ecosystem activation.'},
+  {a:'sk',b:'m',color:'#918dff',role:'Spacemanic integration',tip:'Slovakia → CroCube: Spacemanic provides the documented integration role.'},
+  {a:'hu',b:'m',color:'#45d39a',role:'Mission-operations links',tip:'Hungary → CroCube: the portfolio records Hungarian mission-operations links.'},
+  {a:'m',b:'visibility',color:'#65baff',role:'National-first ecosystem activation',tip:'CroCube → Visibility & outreach: a realised national-first and public-engagement pathway.'},
+  {a:'m',b:'integration',color:'#918dff',role:'Cross-border engineering delivery',tip:'CroCube → Regional integration: the case demonstrates regional division of technical roles.'},
+  {a:'m',b:'ops',color:'#45d39a',role:'Shared operational learning',tip:'CroCube → Operations experience: operational linkages are recorded, while long-term economic effects remain open.'}
+ ]},
+ GRBAlpha:{mission:'GRBALPHA',missionColor:'#918dff',nodes:[
+  {id:'sk',x:14,y:50,w:55,h:32,label:'Slovakia',color:'#918dff',side:'left'},
+  {id:'hu',x:14,y:158,w:55,h:32,label:'Hungary',color:'#45d39a',side:'left'},
+  {id:'m',x:158,y:102,w:84,h:48,label:'GRBALPHA',color:'#918dff',side:'mid'},
+  {id:'science',x:330,y:55,w:54,h:30,label:'Gamma-ray\nscience',color:'#918dff',side:'right'},
+  {id:'open',x:330,y:166,w:54,h:30,label:'Open data &\ncatalogues',color:'#4be0d0',side:'right'}],
+ links:[
+  {a:'sk',b:'m',color:'#918dff',role:'Spacecraft and mission-integration background',tip:'Slovakia → GRBAlpha: the mission’s spacecraft and integration background is Slovak-linked.'},
+  {a:'hu',b:'m',color:'#45d39a',role:'Konkoly Observatory scientific leadership',tip:'Hungary → GRBAlpha: Konkoly Observatory leads the scientific contribution and analysis.'},
+  {a:'m',b:'science',color:'#918dff',role:'227 classified transients, including 124 GRBs',tip:'GRBAlpha → Gamma-ray science: the mission produced 227 classified transient detections, including 124 gamma-ray bursts.'},
+  {a:'m',b:'open',color:'#4be0d0',role:'Reusable data products',tip:'GRBAlpha → Open data & catalogues: light curves and catalogue products support verification and downstream research.'}
+ ]}
+};
+let current='Mauve';const svg=document.getElementById('diagram');const tip=document.getElementById('tooltip');
+function esc(text){return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function lines(text,x,y,cls,anchor){return text.split('\n').map(function(line,i){return '<text x="'+x+'" y="'+(y+i*9)+'" class="'+cls+'" text-anchor="'+(anchor||'start')+'">'+esc(line)+'</text>';}).join('');}
+function nodeCenter(n){return {x:n.x+n.w/2,y:n.y+n.h/2};}
+function getNode(c,id){return c.nodes.find(function(n){return n.id===id;});}
+function showTip(title,body){document.getElementById('tip-title').textContent=title;document.getElementById('tip-body').textContent=body;tip.classList.add('show');}
+function render(){const c=cases[current];let out='';c.links.forEach(function(l){const a=getNode(c,l.a),b=getNode(c,l.b);const from=l.a=== 'm'?{x:a.x+a.w,y:a.y+a.h/2}:{x:a.x+a.w,y:a.y+a.h/2};const to=l.b==='m'?{x:b.x,y:b.y+b.h/2}:{x:b.x,y:b.y+b.h/2};const curve=(to.x-from.x)*.48;out+='<path class="link" data-title="'+esc(l.role)+'" data-tip="'+esc(l.tip)+'" d="M '+from.x+' '+from.y+' C '+(from.x+curve)+' '+from.y+', '+(to.x-curve)+' '+to.y+', '+to.x+' '+to.y+'" stroke="'+l.color+'" stroke-width="8"></path>';});c.nodes.forEach(function(n){out+='<rect class="node" data-title="'+esc(n.label.replace(/\n/g,' '))+'" data-tip="'+esc(n.label.replace(/\n/g,' ')+' is a documented node in the '+c.mission+' cross-border pathway.')+'" x="'+n.x+'" y="'+n.y+'" width="'+n.w+'" height="'+n.h+'" fill="'+n.color+'"></rect>';const cx=n.x+n.w/2,cy=n.y+n.h/2;if(n.side==='mid'){out+=lines(n.label,cx,cy-3,'mission-label','middle');}else{out+=lines(n.label,cx,cy-3,'node-label','middle');}});out+='<text x="200" y="17" class="role-label" text-anchor="middle">documented country roles → mission → observable pathway</text>';svg.innerHTML=out;svg.querySelectorAll('[data-tip]').forEach(function(el){el.addEventListener('click',function(){showTip(el.dataset.title,el.dataset.tip);});});}
+document.querySelectorAll('.tab').forEach(function(btn){btn.addEventListener('click',function(){current=btn.dataset.case;document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('active',b===btn);});tip.classList.remove('show');render();});});document.getElementById('close').addEventListener('click',function(){tip.classList.remove('show');});render();
+</script>
+</body>
+</html>

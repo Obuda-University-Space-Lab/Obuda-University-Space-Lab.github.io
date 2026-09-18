@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WREN-1 EO Service Pathway</title>
+  <style>
+    :root{--bg:#071724;--panel:#0c263b;--line:#2b5a76;--text:#eef9ff;--muted:#a9c7d8;--accent:#4be0d0;--green:#47d49a;--blue:#63baff;--amber:#f8c75b;--red:#ff7d7d}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+    .widget{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at 88% 5%,rgba(47,145,176,.25),transparent 35%),linear-gradient(135deg,#0c263b,#071724)}
+    .header{height:44px;display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid rgba(100,162,192,.25);background:rgba(7,23,36,.8)}.eyebrow{display:block;color:#67e2d4;font-size:7px;line-height:1;text-transform:uppercase;font-weight:800;letter-spacing:.13em}.headline{display:block;margin-top:4px;font-size:12px;line-height:1;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.status{border:1px solid rgba(71,212,154,.58);border-radius:999px;background:rgba(71,212,154,.12);color:#baffdc;padding:5px 7px;font-size:8px;white-space:nowrap}
+    .body{position:relative;height:calc(100% - 44px);padding:11px 8px 30px}.path{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:3px;height:94px}.step{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;height:58px;padding:5px 3px;border:1px solid rgba(124,196,220,.42);border-radius:7px;background:#11344e;color:#edfaff;font-size:8px;font-weight:750;line-height:1.2;text-align:center;cursor:pointer;transition:.15s ease}.step:hover,.step.active{transform:translateY(-2px);border-color:var(--accent);background:#1a526a;box-shadow:0 5px 14px rgba(0,0,0,.25)}.step::after{content:'›';position:absolute;right:-7px;top:18px;z-index:2;color:#87c8dc;font-size:19px;font-weight:300}.step:last-child::after{display:none}.step.observed{border-color:rgba(71,212,154,.65)}.step.emerging{border-color:rgba(248,199,91,.75)}.step.open{border-color:rgba(255,125,125,.68);border-style:dashed}.num{position:absolute;top:-8px;left:50%;transform:translateX(-50%);display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#153e59;border:1px solid #73cbdf;color:#eafaff;font-size:7px;font-weight:850}.step.observed .num{border-color:var(--green);color:#baffdc}.step.emerging .num{border-color:var(--amber);color:#ffe5a3}.step.open .num{border-color:var(--red);color:#ffd0d0}
+    .legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;color:#c8e0ec;font-size:7px}.key{display:flex;align-items:center;gap:3px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block}.detail{position:absolute;left:9px;right:9px;bottom:29px;min-height:48px;padding:8px 9px;border-left:3px solid var(--accent);border-radius:5px;background:rgba(8,27,43,.87);color:#d8eaf3;font-size:9px;line-height:1.38}.detail strong{display:block;color:#78eadc;font-size:9px;margin-bottom:2px}.footer{position:absolute;left:8px;right:8px;bottom:6px;margin:0;color:#a9c7d8;font-size:7px;line-height:1.18;text-align:center}.marker{display:inline-block;margin-left:5px;border-radius:999px;padding:2px 4px;font-size:7px;font-weight:800;vertical-align:1px}.observedTag{background:rgba(71,212,154,.18);color:#baffdc}.emergingTag{background:rgba(248,199,91,.18);color:#ffe2a0}.openTag{background:rgba(255,125,125,.17);color:#ffc9c9}
+    @media(max-width:390px){.headline{font-size:11px}.status{font-size:7px;padding:4px 5px}.body{padding-left:5px;padding-right:5px}.path{gap:2px}.step{font-size:7px;padding:4px 2px}.step::after{right:-6px;font-size:16px}.detail{left:6px;right:6px;font-size:8px}.legend{gap:5px}}
+  </style>
+</head>
+<body>
+<div class="widget">
+  <div class="header"><div><span class="eyebrow">WREN-1 — EO service conversion</span><span class="headline">From satellite demonstration to recurring service</span></div><span class="status">Operational 6U EO CubeSat</span></div>
+  <div class="body">
+    <div class="path" id="path"></div>
+    <div class="legend"><span class="key"><i class="dot" style="background:var(--green)"></i>Observed</span><span class="key"><i class="dot" style="background:var(--amber)"></i>Emerging / conflicting</span><span class="key"><i class="dot" style="background:var(--red)"></i>Not yet demonstrated</span></div>
+    <div class="detail" id="detail"></div>
+    <p class="footer">Click a stage. Launch enables the service pathway; it does not complete it.</p>
+  </div>
+</div>
+<script>
+const stages=[
+ {title:'6U EO\nsatellite',state:'observed',tag:'OBSERVED',detail:'WREN-1 is an operational 6U Earth-observation CubeSat. The mission provides the flight platform for end-to-end EO learning.'},
+ {title:'Multispectral +\nSWIR imagery',state:'observed',tag:'OBSERVED',detail:'The mission has demonstrated multispectral and SWIR image acquisition, with approximately 16 m ground sampling reported in the project record.'},
+ {title:'Calibration +\nground processing',state:'observed',tag:'OBSERVED',detail:'Commissioning, calibration, ground workflow and geometric-correction work are part of the demonstrated technical chain; these are also reflected in engineering and research outputs.'},
+ {title:'Soil-moisture /\ndrought product',state:'emerging',tag:'EMERGING',detail:'Drought and topsoil-moisture decision-support use is the intended applied pathway. Methods and early imagery-based work are evidenced, but routine user-product performance is still developing.'},
+ {title:'Validated user\nworkflow',state:'open',tag:'OPEN',detail:'A scalable service requires validated user workflows, reliable tasking, automation, revisit performance and performance under cloud/daylight constraints. These stages remain open.'},
+ {title:'Repeat customer +\nservice revenue',state:'open',tag:'OPEN',detail:'Combit reported no verified sales volumes, while C3S reported limited data-package sales that were commercially immaterial and primarily tested the business model. Subscription-scale revenue is not demonstrated.'}
+];
+const colors={observed:'var(--green)',emerging:'var(--amber)',open:'var(--red)'};const labels={observed:'observedTag',emerging:'emergingTag',open:'openTag'};const path=document.getElementById('path');const detail=document.getElementById('detail');let active=0;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function render(){path.innerHTML=stages.map(function(s,i){return '<button class="step '+s.state+(i===active?' active':'')+'" data-i="'+i+'" aria-label="'+esc(s.title.replace(/\n/g,' '))+'"><span class="num">'+(i+1)+'</span>'+esc(s.title).replace(/\n/g,'<br>')+'</button>';}).join('');document.querySelectorAll('.step').forEach(function(btn){btn.addEventListener('click',function(){active=Number(btn.dataset.i);render();});});const s=stages[active];detail.style.borderLeftColor=colors[s.state];detail.innerHTML='<strong>'+esc(s.title.replace(/\n/g,' '))+' <span class="marker '+labels[s.state]+'">'+s.tag+'</span></strong>'+esc(s.detail);}
+render();
+</script>
+</body>
+</html>

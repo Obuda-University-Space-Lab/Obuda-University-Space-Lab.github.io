@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>ROI Radar Table</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --space: #050b1f;
+            --panel: rgba(10, 24, 58, 0.88);
+            --line: #244a82;
+            --accent: #5dd6ff;
+            --text: #e8f4ff;
+            --muted: #b6cce8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 3rem 1.25rem;
+            color: var(--text);
+            font-family: Inter, system-ui, sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(48, 105, 190, .25) 0 1px, transparent 2px),
+                radial-gradient(circle at 80% 35%, rgba(93, 214, 255, .35) 0 1px, transparent 2px),
+                radial-gradient(circle at 65% 80%, rgba(255, 255, 255, .25) 0 1px, transparent 2px),
+                linear-gradient(135deg, #030716, var(--space) 55%, #0a1b3e);
+            background-size: 180px 180px, 240px 240px, 300px 300px, auto;
+        }
+
+        table {
+            width: min(100%, 980px);
+            margin: auto;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            border-spacing: 0;
+            background: var(--panel);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .45), 0 0 30px rgba(42, 139, 220, .12);
+        }
+
+        th, td { padding: 1.15rem 1.35rem; text-align: left; border-bottom: 1px solid rgba(75, 128, 190, .3); }
+        thead { background: linear-gradient(90deg, #102b5c, #123d70); }
+        thead th { color: var(--accent); letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
+        tbody th { color: #c6e9ff; white-space: nowrap; }
+        td { color: var(--muted); line-height: 1.55; }
+        tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+        tbody tr:hover { background: rgba(56, 137, 209, .12); }
+
+        @media (max-width: 650px) {
+            body { padding: 1rem .5rem; }
+            th, td { padding: .85rem .7rem; }
+            tbody th { white-space: normal; }
+        }
+    </style>
+    <link rel='stylesheet' href='main.css'>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th scope='col'>Radar axis</th>
+                <th scope='col'>Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope='row'>Direct economic</th>
+                <td>Sales, contracts, licences, data subscriptions and realised revenue; grants are recorded as resources, not automatically as return</td>
+            </tr>
+            <tr>
+                <th scope='row'>Industrial capability</th>
+                <td>Flight heritage, reusable platforms, technical qualification, supplier learning and later product/service options</td>
+            </tr>
+            <tr>
+                <th scope='row'>Scientific</th>
+                <td>Publications, datasets, discoveries, conference outputs and mission-enabled research</td>
+            </tr>
+            <tr>
+                <th scope='row'>Education &amp; workforce</th>
+                <td>Student involvement, systems-engineering skills, career pathways and talent retention</td>
+            </tr>
+            <tr>
+                <th scope='row'>Strategic-policy</th>
+                <td>National capability, visibility, ESA/EU integration, sovereignty and policy learning</td>
+            </tr>
+            <tr>
+                <th scope='row'>Ecosystem</th>
+                <td>University–industry links, repeated collaborations, cross-border supply chains and regional networks</td>
+            </tr>
+            <tr>
+                <th scope='row'>Sustainability</th>
+                <td>Deorbit planning, collision awareness, responsible operations, efficiency and reusable responsible-space capabilities</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

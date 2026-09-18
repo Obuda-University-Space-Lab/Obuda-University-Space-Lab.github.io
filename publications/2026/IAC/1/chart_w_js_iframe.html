@@ -1,0 +1,267 @@
+<section class="cee-map-preview" aria-labelledby="cee-map-title">
+  <div class="cee-map-copy">
+    <p class="cee-map-eyebrow">Interactive visualisation</p>
+    <h2 id="cee-map-title">CEE CubeSat mission network</h2>
+    <p>
+      Explore 21 CubeSat and PocketQube missions across Hungary,
+      Slovakia, Czechia and Croatia, including cross-border roles in
+      integration, operations and science.
+    </p>
+
+    <div class="cee-map-stats">
+      <span>21 missions</span>
+      <span>4 focal ecosystems</span>
+      <span>7 return dimensions</span>
+    </div>
+
+    <button id="open-cee-map" type="button">
+      Open interactive map
+    </button>
+  </div>
+</section>
+
+<div
+  id="cee-map-modal"
+  class="cee-map-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cee-map-modal-title"
+  aria-hidden="true">
+
+  <div class="cee-map-modal__window">
+    <div class="cee-map-modal__header">
+      <div>
+        <p class="cee-map-eyebrow">Interactive visualisation</p>
+        <h2 id="cee-map-modal-title">CEE CubeSat mission network</h2>
+      </div>
+
+      <button
+        id="close-cee-map"
+        class="cee-map-modal__close"
+        type="button"
+        aria-label="Close interactive map">
+        ×
+      </button>
+    </div>
+
+    <iframe
+      id="cee-map-frame"
+      src="https://obuda-university-space-lab.github.io/publications/2026/IAC/1/cee_cubesat_google_geochart_en.html"
+      title="Interactive CEE CubeSat Mission GeoChart"
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<style>
+  .cee-map-preview {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(70, 205, 203, 0.45);
+    border-radius: 18px;
+    padding: 28px;
+    color: #edf8ff;
+    background:
+      radial-gradient(circle at 88% 10%, rgba(66, 221, 207, 0.28), transparent 26%),
+      linear-gradient(135deg, #0a1d31, #123c5a);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
+  }
+
+  .cee-map-preview::after {
+    content: "HU · SK · CZ · HR";
+    position: absolute;
+    right: 24px;
+    bottom: 18px;
+    font-size: clamp(1.1rem, 3vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: rgba(163, 241, 212, 0.2);
+    pointer-events: none;
+  }
+
+  .cee-map-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 660px;
+  }
+
+  .cee-map-eyebrow {
+    margin: 0 0 6px;
+    color: #62e5d7;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .cee-map-preview h2,
+  .cee-map-modal h2 {
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .cee-map-preview p:not(.cee-map-eyebrow) {
+    max-width: 640px;
+    margin: 0;
+    color: #c5ddeb;
+    line-height: 1.55;
+  }
+
+  .cee-map-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .cee-map-stats span {
+    border: 1px solid rgba(155, 224, 238, 0.35);
+    border-radius: 999px;
+    padding: 6px 10px;
+    color: #dff8ff;
+    font-size: 0.84rem;
+  }
+
+  #open-cee-map {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 15px;
+    background: #45dbc9;
+    color: #082031;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  #open-cee-map:hover {
+    background: #8df0df;
+  }
+
+  .cee-map-modal {
+    position: fixed;
+    z-index: 99999;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5vh 2.5vw;
+    background: rgba(2, 9, 17, 0.8);
+    backdrop-filter: blur(7px);
+  }
+
+  .cee-map-modal.is-open {
+    display: flex;
+  }
+
+  .cee-map-modal__window {
+    display: flex;
+    flex-direction: column;
+    width: min(1500px, 96vw);
+    height: min(920px, 94vh);
+    overflow: hidden;
+    border: 1px solid rgba(105, 203, 222, 0.44);
+    border-radius: 18px;
+    background: #07111f;
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.65);
+  }
+
+  .cee-map-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(99, 157, 186, 0.35);
+    background: #0c2036;
+    color: #edf8ff;
+  }
+
+  .cee-map-modal__header h2 {
+    font-size: 1.1rem;
+  }
+
+  .cee-map-modal__close {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(193, 226, 239, 0.35);
+    border-radius: 50%;
+    background: #193752;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .cee-map-modal__close:hover {
+    background: #315a78;
+  }
+
+  #cee-map-frame {
+    display: block;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    background: #07111f;
+  }
+
+  body.cee-map-lock {
+    overflow: hidden;
+  }
+
+  @media (max-width: 700px) {
+    .cee-map-modal {
+      padding: 0;
+    }
+
+    .cee-map-modal__window {
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .cee-map-modal__header {
+      padding: 12px;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const modal = document.getElementById("cee-map-modal");
+    const openButton = document.getElementById("open-cee-map");
+    const closeButton = document.getElementById("close-cee-map");
+
+    function openMap() {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("cee-map-lock");
+      closeButton.focus();
+    }
+
+    function closeMap() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("cee-map-lock");
+      openButton.focus();
+    }
+
+    openButton.addEventListener("click", openMap);
+    closeButton.addEventListener("click", closeMap);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeMap();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("is-open")) {
+        closeMap();
+      }
+    });
+  })();
+</script>
